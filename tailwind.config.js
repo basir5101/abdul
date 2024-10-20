@@ -32,6 +32,7 @@ module.exports = {
       },
       animation: {
         shine: "shine 5s ease-in-out 500ms infinite",
+        border: "border 4s linear infinite",
       },
       keyframes: {
         shine: {
@@ -42,6 +43,9 @@ module.exports = {
         },
         gradient: {
           to: { "background-position": "200% center" },
+        },
+        border: {
+          to: { "--border-angle": "360deg" },
         },
       },
     },
