@@ -46,7 +46,7 @@ export default function Footer() {
               </p>
               <ul className="inline-flex gap-1">
                 {contactDetails.map((item, index) => (
-                  <li>
+                  <li key={index}>
                     <Link
                       className="flex items-center justify-center text-indigo-500 transition hover:text-indigo-400"
                       href={item.link}

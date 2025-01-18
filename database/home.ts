@@ -201,7 +201,7 @@ export const contactDetails = [
   },
   {
     title: "Phone",
-    link: "+8801774066225",
+    link: "https://wa.me/1774066225",
     Icon: PhoneCall,
   },
 ];

@@ -60,7 +60,7 @@ export default function Blogs() {
               {blogDetails.map((blog, index) => (
                 <div
                   data-aos="fade-up"
-                  data-aos-delay={400}
+                  data-aos-delay={300}
                   className=" border rounded border-indigo-800 p-3 hover:bg-indigo-800 transition-all"
                   key={index}
                 >

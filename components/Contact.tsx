@@ -4,7 +4,8 @@ import BlurredShape from "@/public/images/blurred-shape.svg";
 import { contactContent } from "@/database/home";
 import Title from "./ui/Title";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
@@ -13,8 +14,9 @@ export default function Contact() {
   const [userData, setUserData] = useState<any>({
     name: "",
     email: "",
-    query: "",
+    message: "",
   });
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -25,18 +27,33 @@ export default function Contact() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const response = await fetch("/api/email", {
-      method: "POST",
-      body: JSON.stringify(userData),
-    });
-    const result = await response.json();
-    if (result.success) {
-      setSuccess(true);
-      setUserData({});
-    } else {
-      setError("Failed to send email");
+    if (!formRef.current) {
+      setError("Please fill up the form");
+      return;
     }
-    setLoading(false);
+    console.log(process.env.SERVICE_ID, userData);
+    await emailjs
+      .sendForm(
+        process.env.SERVICE_ID || "",
+        process.env.TEMPLATE_ID || "",
+        formRef.current,
+        {
+          publicKey: process.env.PUBLIC_ID,
+        }
+      )
+      .then(
+        () => {
+          setSuccess(true);
+          setUserData({});
+          console.log("SUCCESS!");
+          setLoading(false);
+        },
+        (error) => {
+          setError("Failed to send email");
+          setLoading(false);
+          console.log("ERROR!", error);
+        }
+      );
   };
   return (
     <section className="relative overflow-hidden">
@@ -63,12 +80,12 @@ export default function Contact() {
             >
               {contactContent.description}{" "}
             </div>
-            <form className="mx-auto max-w-[500px]">
+            <form ref={formRef} className="mx-auto max-w-[500px]">
               <div className="space-y-5">
                 <div>
                   <label
                     className="mb-1 block text-sm font-medium text-indigo-200/65"
-                    htmlFor="email"
+                    htmlFor="name"
                   >
                     Name
                   </label>
@@ -98,13 +115,13 @@ export default function Contact() {
                 <div>
                   <label
                     className="mb-1 block text-sm font-medium text-indigo-200/65"
-                    htmlFor="email"
+                    htmlFor="message"
                   >
                     Message
                   </label>
                   <textarea
                     rows={5}
-                    name="query"
+                    name="message"
                     onChange={handleChange}
                     className="form-input w-full"
                     placeholder="Your query"
