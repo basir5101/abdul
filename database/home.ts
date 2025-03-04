@@ -15,7 +15,7 @@ export const heroContent = {
     "Full-Stack Web Developer | Specializing in React.js, Next.js, Node.js, and Tailwind CSS",
   ctaButton: {
     label: "View My Projects",
-    link: "/projects",
+    link: "#projects",
   },
   image: "/images/ab2.png", // Add your image path here
 };
@@ -58,7 +58,7 @@ export const projects = [
       "A visually appealing landing page for a food marketing brand, featuring dynamic content management and interactive elements.",
     technologies: ["Tailwind CSS", "Next.js", "Sanity", "Swiper JS"],
     image: "/images/boya.png",
-    liveDemo: "https://boya-8sokujclv-basir5101s-projects.vercel.app/",
+    liveDemo: "https://boya-alpha.vercel.app/",
     github: "https://github.com/basir5101/boya",
   },
   {
